@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "096f375c-aab0-4d3a-ad7b-f45a01ae2e3f",
+		"name": "Projet - ReqRes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45082798",
+		"_collection_link": "https://baptiste-3484544.postman.co/workspace/Baptiste's-Workspace~e122df56-6730-4b54-8d9f-2a35321f0506/collection/45082798-096f375c-aab0-4d3a-ad7b-f45a01ae2e3f?action=share&source=collection_link&creator=45082798"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "GET - All",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Vérification du code 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérifier que le contenu contient une data\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"data\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérifier que le contenu est en JSON\", () => {\r",
+									"    pm.response.to.be.json;\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reqresUrl}}users",
+							"host": [
+								"{{reqresUrl}}users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Single",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Statut 200 est ok\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérification de l'id\", () => {\r",
+									"    const json = pm.response.json();\r",
+									"    pm.expect(json.data.id).to.eql(2);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérification de l'email, du nom et du prénom\", () => {\r",
+									"    const json = pm.response.json();\r",
+									"    pm.expect(json.data.email).to.eql(\"janet.weaver@reqres.in\")\r",
+									"    pm.expect(json.data.first_name).to.eql(\"Janet\")\r",
+									"    pm.expect(json.data.last_name).to.eql(\"Weaver\")\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reqresUrl}}users/2",
+							"host": [
+								"{{reqresUrl}}users"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST - Single user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Vérifier le statut 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérifier le format de la réponse\", () => {\r",
+									"    pm.response.to.be.json;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérification des informations du POST\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(\"56\");\r",
+									"    pm.expect(jsonData.email).to.eql(\"arwouin@gmail.com\");\r",
+									"    pm.expect(jsonData.first_name).to.eql(\"Aiden\");\r",
+									"    pm.expect(jsonData.last_name).to.eql(\"arwouin\");\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"createdAt\")\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"56\",\r\n    \"email\": \"arwouin@gmail.com\",\r\n    \"first_name\": \"Aiden\",\r\n    \"last_name\": \"arwouin\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{reqresUrl}}users",
+							"host": [
+								"{{reqresUrl}}users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT - User 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Code de vérification HTTP 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérifier le format de l'objet\", () => {\r",
+									"    pm.response.to.be.json;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérifier que le profil à bien été update\", () => {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"updatedAt\")\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"id\": 2,\r\n        \"email\": \"put@gmail.com\",\r\n        \"first_name\": \"Modified\",\r\n        \"last_name\": \"Jacky\",\r\n        \"avatar\": \"https://reqres.in/img/faces/2-image.jpg\"\r\n    },\r\n    \"support\": {\r\n        \"url\": \"https://contentcaddy.io?utm_source=reqres&utm_medium=json&utm_campaign=referral\",\r\n        \"text\": \"Tired of writing endless social media content? Let Content Caddy generate it for you.\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{reqresUrl}}users/2",
+							"host": [
+								"{{reqresUrl}}users"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH - User 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Vérification du status\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérification du format\", () => {\r",
+									"    pm.response.to.be.json;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Vérifier que l'utilisateur à bien été patch\", () => {\r",
+									"    const json = pm.response.json();\r",
+									"    pm.expect(json).to.have.property(\"updatedAt\")\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"id\": 2,\r\n        \"email\": \"janet.weaver@reqres.in\",\r\n        \"first_name\": \"newName\",\r\n        \"last_name\": \"Weaver\",\r\n        \"avatar\": \"https://reqres.in/img/faces/2-image.jpg\"\r\n    },\r\n    \"support\": {\r\n        \"url\": \"https://contentcaddy.io?utm_source=reqres&utm_medium=json&utm_campaign=referral\",\r\n        \"text\": \"Tired of writing endless social media content? Let Content Caddy generate it for you.\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{reqresUrl}}users/2",
+							"host": [
+								"{{reqresUrl}}users"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE - User 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Vérification du code statut\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"id\": 2,\r\n        \"email\": \"janet.weaver@reqres.in\",\r\n        \"first_name\": \"newName\",\r\n        \"last_name\": \"Weaver\",\r\n        \"avatar\": \"https://reqres.in/img/faces/2-image.jpg\"\r\n    },\r\n    \"support\": {\r\n        \"url\": \"https://contentcaddy.io?utm_source=reqres&utm_medium=json&utm_campaign=referral\",\r\n        \"text\": \"Tired of writing endless social media content? Let Content Caddy generate it for you.\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{reqresUrl}}users/3",
+							"host": [
+								"{{reqresUrl}}users"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.request.headers.add({\r",
+					"    key: 'x-api-key',\r",
+					"    value: 'reqres-free-v1'\r",
+					"});\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
