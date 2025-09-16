@@ -24,6 +24,7 @@ jobs:
 
       - name: Run Postman collection
         run: |
+          mkdir -p reports
           newman run collections/collection.json \
           -e environments/environment.json \
           --reporters cli,html,json \
